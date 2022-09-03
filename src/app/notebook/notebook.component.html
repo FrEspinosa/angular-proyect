@@ -1,0 +1,301 @@
+<div *ngIf="!modalService.modal else elseBlock2 bg" class="col-lg-12 animated fadeInDown">
+  <div class="card">
+    <div class="card-header card-header-blue">
+      <h1 class="card-title">Lista de notebooks</h1>
+      <p class="card-category">Hardware</p>
+    </div>
+    <div class="card-body">
+      <div class="content messages-container">
+        <div *ngIf="notebooks?.length == 0" id="information_message" class="alert alert-info rounded">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+            ×
+          </button>
+          <div class="Message-icon">
+            <fa-icon [icon]="['fas', 'info-circle']"></fa-icon>
+          </div>
+          <div class="Message-body">
+            <strong>No se encontraron notebooks!! </strong>
+            <span></span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <input type="checkbox" id="isCheckBox" (change)="applyFilter2($event)" />
+          <mat-label>Mostrar solo Disponibles</mat-label>
+        </div>
+
+
+
+        <div class="col-md-6">
+          <mat-form-field appearance="standard">
+            <mat-label>Filtrar</mat-label>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Ingrese un valor" #input />
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <button color="warn" mat-raised-button class="button-list" name="buttonBuscar" (click)="getAllNotebook()"
+            style="margin: 10px">
+            <mat-icon>search</mat-icon>
+
+          </button>
+
+          <button style="margin-right: 0px" color="primary" mat-raised-button
+            class="mat-focus-indicator mat-button-base" type="button" [routerLink]="['/notebooks/form']">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        <div class="col-md-6"></div>
+
+      </div>
+      <div class="mat-elevation-z8 text-center">
+        <mat-table [dataSource]="dataSource" matSort>
+          <!-- Position Column -->
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let notebook">
+              <td>
+                <img src="..\assets\img\notebook.jpg" class="rounded img-list" style="width:64px; cursor-pointer" />
+              </td>
+            </mat-cell>
+          </ng-container>
+          <!-- Name Column -->
+          <ng-container matColumnDef="fusapId">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <b>Fusap ID</b>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let notebook">
+              {{ notebook.fusapId }}
+            </mat-cell>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="marca">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Marca
+            </mat-header-cell>
+            <mat-cell *matCellDef="let notebook">
+              {{ notebook.marca }}
+            </mat-cell>
+          </ng-container>
+          <!-- Weight Column -->
+          <ng-container matColumnDef="modelo">
+            <mat-header-cell *matHeaderCellDef> Modelo </mat-header-cell>
+            <mat-cell *matCellDef="let notebook">
+              {{ notebook.modelo }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="procesador">
+            <mat-header-cell *matHeaderCellDef>
+              procesador
+            </mat-header-cell>
+            <mat-cell *matCellDef="let notebook">
+              {{ notebook.procesador }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="ram">
+            <mat-header-cell *matHeaderCellDef>
+              ram
+            </mat-header-cell>
+            <mat-cell *matCellDef="let notebook">
+              {{ notebook.ramActual }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="estado">
+            <mat-header-cell *matHeaderCellDef>
+              Estado
+            </mat-header-cell>
+            <mat-cell *matCellDef="let notebook">
+
+              <div *ngIf="notebook.asignada">
+                <h3 style="color:red"> Asignada </h3>
+              </div>
+
+              <div *ngIf="!notebook.asignada">
+                <h3 style="color:green"> Disponible </h3>
+              </div>
+
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+            <mat-cell *matCellDef="let notebook">
+              <div>
+                <td *ngIf="loginService.hasRole('ROLE_ADMIN')"></td>
+                <td>
+                  <button *ngIf="loginService.hasRole('ROLE_ADMIN')" class="margin-buttons" color="primary"
+                    mat-raised-button class="button-list" name="buttonEditar"
+                    [routerLink]="['/notebook/form', notebook.id]" style="margin: 10px">
+                    <mat-icon>edit_note</mat-icon>
+
+                  </button>
+                  <button *ngIf="loginService.hasRole('ROLE_ADMIN')" color="warn" mat-raised-button class="button-list"
+                    name="buttonEliminar" (click)="delete(notebook)" style="margin: 10px">
+                    <mat-icon>delete_forever</mat-icon>
+
+                  </button>
+                  <button *ngIf="loginService.hasRole('ROLE_USER')" color="accent" mat-raised-button class="button-list"
+                    name="buttonEditar" [routerLink]="['/notebook/ficha', notebook.id]" style="margin: 10px">
+                    Ver Ficha
+                  </button>
+                </td>
+              </div>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row @fadeOut *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>
+<!--
+  ****************************
+    MODAL para asignacion 
+  ****************************
+-->
+<ng-template #elseBlock2>
+  <div class="abrir-modal animacion fadeIn">
+    <div class="modal" tabindex="-1" style="display: block">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+              (click)="cerrarModal()"></button>
+          </div>
+          <div class="modal-body">
+            <div class="card">
+              <div class="card-header card-header-blue">
+                <h4 class="card-title">Notebooks disponibles</h4>
+                <p class="card-category">
+                  Estas notebooks son las que se encuentran sin un colaborador
+                  asignado.
+                </p>
+              </div>
+              <div class="card-body">
+                <div class="content messages-container">
+                  <div *ngIf="notebooks?.length == 0" id="information_message" class="alert alert-info rounded">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                      ×
+                    </button>
+                    <div class="Message-icon">
+                      <fa-icon [icon]="['fas', 'info-circle']"></fa-icon>
+                    </div>
+                    <div class="Message-body">
+                      <strong>No se encontraron notebooks!! </strong>
+                      <span></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <mat-form-field appearance="standard">
+                      <mat-label>Filtrar</mat-label>
+                      <input matInput (keyup)="FilterNotebookDisp($event)" placeholder="Ingrese un valor" #input />
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="mat-elevation-z8 text-center">
+                  <mat-table [dataSource]="dataSourceModal" matSort>
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="id">
+                      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                      <mat-cell *matCellDef="let notebook">
+                        <td>
+                          <img src="..\assets\img\notebook.jpg" class="rounded img-list"
+                            style="width:64px; cursor-pointer" />
+                        </td>
+                      </mat-cell>
+                    </ng-container>
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="fusapId">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        fusapId
+                      </mat-header-cell>
+                      <mat-cell *matCellDef="let notebook">
+                        {{ notebook.fusapId }}
+                      </mat-cell>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="marca">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Marca
+                      </mat-header-cell>
+                      <mat-cell *matCellDef="let notebook">
+                        {{ notebook.marca }}
+                      </mat-cell>
+                    </ng-container>
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="modelo">
+                      <mat-header-cell *matHeaderCellDef>
+                        Modelo
+                      </mat-header-cell>
+                      <mat-cell *matCellDef="let notebook">
+                        {{ notebook.modelo }}
+                      </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="procesador">
+                      <mat-header-cell *matHeaderCellDef>
+                        procesador
+                      </mat-header-cell>
+                      <mat-cell *matCellDef="let notebook">
+                        {{ notebook.procesador }}
+                      </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="ram">
+                      <mat-header-cell *matHeaderCellDef>
+                        ram
+                      </mat-header-cell>
+                      <mat-cell *matCellDef="let notebook">
+                        {{ notebook.ramActual }}
+                      </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="estado">
+                      <mat-header-cell *matHeaderCellDef>
+                        Estado
+                      </mat-header-cell>
+                      <mat-cell *matCellDef="let notebook">
+                        {{notebook.asignada}}
+                      </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="actions">
+                      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                      <mat-cell *matCellDef="let notebook; let i = index;">
+                        <div>
+                          <td *ngIf="loginService.hasRole('ROLE_ADMIN')"></td>
+                          <td>
+                            <button *ngIf="loginService.hasRole('ROLE_ADMIN')" class="margin-buttons" color="primary"
+                              mat-raised-button class="button-list" name="buttonEditar"
+                              (click)="this.formComponent.asignarNotebookDisponible(notebook)" style="margin: 10px">
+                              Asignar
+                            </button>
+
+
+                          </td>
+                        </div>
+                      </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+                  </mat-table>
+                  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" color="warn" mat-raised-button (click)="cerrarModal()">
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

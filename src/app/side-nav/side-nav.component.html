@@ -1,0 +1,49 @@
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches" *ngIf="shouldRun">
+  <mat-toolbar color="primary" class="example-toolbar">
+
+
+    <button mat-icon-button (click)="toggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1 class="example-app-name">SIF</h1>
+    <div class="spacer"></div>
+      <div class="flex-stretch"></div>
+      <mat-slide-toggle [formControl]="toggleControl" class="mr-8">
+      </mat-slide-toggle>
+      <mat-icon>bedtime</mat-icon>
+    <li *ngIf="!loginService.isAuthenticated()"> <a [routerLink]="['/login']" color="accent" mat-raised-button>Iniciar sesion!</a> </li>
+    <li *ngIf="loginService.isAuthenticated()">
+      <button mat-raised-button color="accent" id="dropdownMenuButton1" data-bs-toggle="dropdown">
+        <mat-icon>face</mat-icon>{{loginService.usuario.username}}
+      </button>
+      <ul class="dropdown-menu">
+        <button (click)="logout()" class="btn btn-secundary dropdown-item" type="submit">
+          <mat-icon>logout</mat-icon>Cerrar sesion
+        </button>
+      </ul>
+    </li>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="bg example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+  <!-- #para mobile?   -->
+  <mat-sidenav #mySidenav  [opened]="isShowing" [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56"> 
+      <div class="div-logo">
+        <img src="..\assets\img\logotipos\FUSAP_MARCA-POSITIVA_COLOR.png" class="rounded logo">
+      </div>
+      <mat-nav-list>
+        <a mat-list-item [routerLink]="nav.route" *ngFor="let nav of listaNav">
+          <mat-icon>{{nav.icon}}</mat-icon> {{nav.name}}
+        </a>
+        <!--
+          <a class="nav-link" routerLink="/directivas">Directivas</a>
+          <a class="nav-link" [routerLink]="['/clientes']">empleados</a>-->
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
+<div *ngIf="!shouldRun">Please open on Stackblitz to see result</div>

@@ -1,0 +1,338 @@
+<div class="animated fadeInDown content">
+
+  <div fxLayout="row wrap" fxLayoutAlign="stretch flex-start">
+    <div class="card" fxFlex="70" fxFlex.lt-md="100" fxFlex.lt-sm="100">
+      <div class="card-header card-header-blue">
+        <h4 class="card-title">Perfil del Empleado</h4>
+        <p class="card-category">Datos personales</p>
+      </div>
+      <fieldset [disabled]="this.role ? 'disabled' : null">
+        <!-- fields go here -->
+        <div class="card-body">
+          <div class="col-sm-12">
+
+            <!-- ************************************
+A PARTIR DE ACÁ ES EL FORM QUE HABIA HECHO FRANCO
+************************************ -->
+
+            <form #clienteForm="ngForm">
+
+              <div class="row">
+
+                <div class="col-md-6 col-sm-6">
+                  <div class="form-group">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Nombre</mat-label>
+                      <input [(ngModel)]="cliente.nombre" name="nombre" #nombre="ngModel" matInput required
+                        minlength="4" />
+                      <mat-error *ngIf="nombre.errors?.['required']"> El campo nombre es requerido. </mat-error>
+                      <mat-error *ngIf="nombre.errors?.['minlength']"> El minimo son 4 caracteres. </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6">
+                  <div class="form-group">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Apellido</mat-label>
+                      <input [(ngModel)]="cliente.apellido" name="apellido" #apellido="ngModel" matInput required
+                        minlength="4" />
+                      <mat-error *ngIf="apellido.errors?.['required']"> El campo apellido es requerido. </mat-error>
+                      <mat-error *ngIf="apellido.errors?.['minlength']"> El minimo son 4 caracteres. </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row mt-2">
+
+                <div class="col-md-6 col-sm-6">
+                  <div class="form-group">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Email</mat-label>
+                      <input [(ngModel)]="cliente.email" name="email" #email="ngModel" matInput required
+                        minlength="4" />
+                      <mat-error *ngIf="email.errors?.['required']"> El campo email es requerido. </mat-error>
+                      <mat-error *ngIf="email.errors?.['minlength']"> El minimo son 4 caracteres. </mat-error>
+                      <mat-error *ngIf="email.errors?.['email']"> El formato de email es inválido. </mat-error>
+                    </mat-form-field>
+
+
+                    <!--
+                    <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+                      <div *ngIf="email.errors.required">
+                        El campo es requerido.
+                      </div>
+                      <div *ngIf="email.errors.email">
+                        El mail no es valido.
+                      </div>
+                    </div>
+                    -->
+
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6">
+                  <div class="form-group">
+                    <div>
+                      <mat-form-field color="primary" appearance="fill">
+                        <mat-label>Fecha ingreso</mat-label>
+                        <input [matDatepicker]="miDatepicker" [(ngModel)]="cliente.fechaIngreso" name="fechaIngreso"
+                          #fechaIngreso="ngModel" matInput required />
+                        <mat-error *ngIf="fechaIngreso.errors?.['required']"> El campo fecha es requerido. </mat-error>
+                      </mat-form-field>
+                      <mat-datepicker-toggle [for]="miDatepicker"></mat-datepicker-toggle>
+                      <mat-datepicker touchUi #miDatepicker></mat-datepicker>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </form>
+
+            <div class="row">
+              <div class="hr-line-dashed"></div>
+              <div class="col-md-12 col-sm-12 text-center">
+                <button class="btn btn-primary" role="button" (click)="create()" *ngIf="!cliente.id; else elseBlock"
+                  [disabled]="!clienteForm.form.valid">
+                  Crear
+                </button>
+                <ng-template #elseBlock>
+                  <button class="btn btn-primary" role="button" (click)="updateCliente()"
+                    [disabled]="!clienteForm.form.valid">
+                    Editar
+                  </button>
+                </ng-template>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </fieldset>
+    </div>
+
+
+    <!-- 
+    ************************************
+      FOTO DE PERFIL
+    ************************************
+    -->
+    <!-- los flex no dan 100 en total por el margin left/right que tienen las cards-->
+    <div class="card" fxFlex="25" fxFlex.md="100" fxFlex.sm="100">
+      <div class="card-header card-header-blue">
+        <h4 class="card-title">Foto de perfil</h4>
+        <p class="card-category">Datos personales</p>
+      </div>
+      <div class="card-body">
+
+        <div class="row justify-content-center text-center">
+
+          <!--  <img class="col-md-6 col-sm-6" id="blah" [src]="imageSrc" alt="{{cliente.fotoPerfil}}" /> -->
+
+
+          <!-- Esta condición muestra cuando NO tiene foto de perfil y tampoco carga imagen-->
+          <div *ngIf="imageSrc == null && cliente.fotoPerfil == null">
+            <div class="col-md-6 col-sm-6 divImagenPerfil">
+              <h1>Sin foto perfil</h1>
+              <img style="width: 200px; height: 170px" src="../../assets/img/employe03.jpg" class="col-md-6 col-sm-6" id="blah" />
+            </div>
+          </div>
+
+          <!-- Esta condición muestra la imagen a cargar -->
+          <div *ngIf="imageSrc != null && cliente.fotoPerfil == null">
+            <div class="col-md-6 col-sm-6 divImagenPerfil">
+              <h1>Eligiendo...</h1>
+              <img style="width: 200px; height: 170px" src="{{imageSrc}}" alt="{{cliente.fotoPerfil}}" class="col-md-6 col-sm-6" id="blah" />
+            </div>
+          </div>
+
+          <!-- Esta condicion muestra la foto de perfil si ya está cargada. Y no se esta cargando otra-->
+          <div *ngIf="imageSrc == null && cliente.fotoPerfil != null">
+            <div class="col-md-6 col-sm-6 divImagenPerfil">
+              <h1>Foto de perfil</h1>
+              <img style="width: 200px; height: 170px" src="{{variableImagenesGuardadas}}{{cliente.fotoPerfil}}" alt="{{cliente.fotoPerfil}}"
+                class="col-md-6 col-sm-6" id="blah" />
+            </div>
+          </div>
+
+           <!-- Ya tengo foto de perfil y la quiero actualizar -->
+           <div *ngIf="imageSrc != null && cliente.fotoPerfil != null">
+            <div class="col-md-6 col-sm-6 divImagenPerfil">
+              <h1>Foto de perfil</h1>
+              <img style="width: 200px; height: 170px" src="{{imageSrc}}" alt="{{cliente.fotoPerfil}}" class="col-md-6 col-sm-6" id="blah" />
+            </div>
+          </div>
+
+
+          <!--
+            <div *ngIf="cliente.fotoPerfil && null || imageSrc == null">
+              <div class="col-md-6 col-sm-6 profile">
+
+                <h1>Sin foto perfil</h1>
+                <img src="../../assets/img/employe03.jpg"/>-->
+          <!--
+                <img
+                  *ngIf="cliente?.fotoPerfil; else elseBlock2"
+                  src="http://localhost:8080/uploads/img/{{cliente.fotoPerfil}}"
+                  alt="{{ cliente.fotoPerfil }}"
+                  class="img-img-thumbnail img-fluid"
+                  />
+               -->
+          <!--  </div>
+            </div>-->
+
+        </div>
+
+        <div class="row mt-2">
+          <div class="hr-line-dashed"></div>
+
+          <div class="col-md-6 col-sm-6 text-center">
+            <div style="margin-bottom: 0px">
+
+              <div *ngIf="imageSrc == null">
+                <label class="btn btn-primary" for="inputGroupFile04">Elegir foto
+                  <input style="display: none;" [disabled]="this.role ? 'disabled' : null"
+                    (change)="seleccionarFoto($event)" type="file" class="form-control" id="inputGroupFile04"
+                    aria-describedby="inputGroupFileAddon04" aria-label="Upload"
+                    accept="image/png, image/gif, image/jpeg" />
+                </label>
+              </div>
+
+              <div *ngIf="imageSrc != null">
+                <button class="btn btn-danger" role="button" (click)="cancelarCarga()">Cancelar carga</button>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-md-6 col-sm-6 text-center">
+            <div style="margin-bottom: 0px">
+              <button (click)="subirFoto()" [disabled]="!fotoSeleccionada && cliente?.id" class="btn btn-primary"
+                type="button" id="inputGroupFileAddon04">
+                Subir foto
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- 
+    ************************************
+      TABLA DE NOTEBOOKS ASIGNADAS
+    ************************************
+    -->
+    <div class="card" fxFlex="100" fxFlex.md="100" fxFlex.sm="100">
+      <div class="card-header card-header-blue">
+        <h4 class="card-title">Notebook asignada</h4>
+        <p class="card-category">
+          Esta notebook es responsabilidad del colaborador.
+        </p>
+      </div>
+      <div class="card-body">
+        <div class="content messages-container">
+          <div *ngIf="cliente.notebooks?.length == 0" id="information_message" class="alert alert-info rounded">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+
+            </button>
+            <div class="Message-icon">
+              <fa-icon [icon]="['fas', 'info-circle']"></fa-icon>
+            </div>
+            <div class="Message-body">
+              <strong>No se encontraron notebooks asignadas. </strong>
+              <span></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3" *ngIf="cliente.notebooks?.length > 0">
+            <mat-form-field appearance="standard">
+              <mat-label>Filtrar</mat-label>
+              <input matInput (keyup)="applyFilter($event)" placeholder="Ingrese un valor" #input />
+            </mat-form-field>
+          </div>
+          <div class="col-md-6"></div>
+          <div class="col-md-3">
+            <button style="margin-right: 0px" color="primary" mat-raised-button
+              class="mat-focus-indicator mat-button-base" type="button" (click)="notebookDisponiblesModal()">
+              Agregar <mat-icon>add_circle</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="mat-elevation-z8 text-center" *ngIf="cliente.notebooks?.length != 0">
+          <mat-table [dataSource]="dataSourceNotebooks" matSort>
+            <!-- Position Column -->
+            <ng-container matColumnDef="id">
+              <mat-header-cell *matHeaderCellDef></mat-header-cell>
+              <mat-cell *matCellDef="let clienteNotebooks">
+                <td>
+                  <img style="width: 200px; height: 170px" src="..\assets\img\notebook.jpg" class="col-md-6 col-sm-6" id="blah" />
+                </td>
+              </mat-cell>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="fusapId">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                fusapId
+              </mat-header-cell>
+              <mat-cell *matCellDef="let clienteNotebooks">
+                {{ clienteNotebooks.fusapId }}
+              </mat-cell>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="marca">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                Marca
+              </mat-header-cell>
+              <mat-cell *matCellDef="let clienteNotebooks">
+                {{ clienteNotebooks.marca }}
+              </mat-cell>
+            </ng-container>
+            <!-- Weight Column -->
+            <ng-container matColumnDef="modelo">
+              <mat-header-cell *matHeaderCellDef> Modelo </mat-header-cell>
+              <mat-cell *matCellDef="let clienteNotebooks">
+                {{ clienteNotebooks.modelo }}
+              </mat-cell>
+
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+              <mat-cell *matCellDef="let clienteNotebooks;let i = index;">
+
+                <div>
+                  <td *ngIf="loginService.hasRole('ROLE_ADMIN')"></td>
+                  <td>
+                    <button *ngIf="loginService.hasRole('ROLE_ADMIN')" color="warn" mat-raised-button
+                      class="button-list" name="buttonEliminar" (click)="eliminarNotebookEmpleado(clienteNotebooks)"
+                      style="margin: 10px">
+                      Desasignar
+                    </button>
+                    <button *ngIf="
+                          loginService.hasRole('ROLE_USER') ||
+                          loginService.hasRole('ROLE_ADMIN')
+                        " color="accent" mat-raised-button class="button-list" name="buttonEditar"
+                      [routerLink]="['/notebook/ficha', clienteNotebooks.id]">
+                      Ver Ficha
+                    </button>
+                  </td>
+                </div>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row @fadeOut *matRowDef="let row; columns: displayedColumns"></mat-row>
+          </mat-table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </div>
+
+    <app-notebook *ngIf="notebookDisponibles?.length > 0" [dataSourceModal]="DSNotebookDisp"></app-notebook>
+  </div>
+
+</div>

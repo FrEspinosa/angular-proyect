@@ -1,0 +1,77 @@
+@use '@angular/material' as mat;
+@include mat.core();
+
+//################################################################################################################################
+$clientes-app-primary: mat.define-palette(mat.$indigo-palette);
+$clientes-app-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$clientes-app-warn: mat.define-palette(mat.$red-palette);
+
+$clientes-app-theme: mat.define-light-theme((
+  color: (
+    primary: $clientes-app-primary,
+    accent: $clientes-app-accent,
+    warn: $clientes-app-warn,
+  )
+));
+@include mat.all-component-themes($clientes-app-theme);
+
+//################################################################################################################################
+@import "~@angular/material/theming";
+// ACA DEFINO THEMES ESPECIFICOS, $clientes-app son los default . $angular- los modifique y luego ademas cree el dark
+$angular-primary: mat.define-palette(mat.$blue-palette, 200);
+$angular-accent: mat.define-palette(mat.$brown-palette, 300);
+$angular-warn: mat.define-palette(mat.$brown-palette);
+
+$angular-default-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $angular-primary,
+      accent: $angular-accent,
+      warn: $angular-warn,
+    ),
+  )
+);
+
+@include mat.all-component-themes($angular-default-theme);
+
+//################################################################################################################################
+
+$angular-dark-primary: mat.define-palette(mat.$yellow-palette, 300);
+$angular-dark-accent: mat.define-palette(mat.$cyan-palette,200 );
+$angular-dark-warn: mat.define-palette(mat.$brown-palette);
+
+$clientes-app-dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $angular-dark-primary,
+      accent: $angular-dark-accent,
+      warn: $angular-dark-warn,
+    ),
+  )
+);
+
+.darkMode {
+  @include mat.all-component-colors($clientes-app-dark-theme);
+  .card {
+    background-color: #5B5B5B;
+    .card-header-blue{
+      background-color: 5B5B5B!important;
+    }
+  }
+  
+  .card .card-header-blue .card-icon, .card .card-header-blue .card-text, .card .card-header-blue:not(.card-header-icon):not(.card-header-text) {
+      box-shadow: 0 4px 20px 0 rgb(0 0 0 / 14%), 0 7px 10px -5px rgb(255 255 255 / 40%);
+  }
+  .mat-sidenav {
+  box-shadow: 0px 0px 35px 0px rgb(255 255 255 / 40% );
+
+  //side-bar
+  .mat-drawer-inner-container{
+    background: #00000070;
+  }
+  }
+  mat-label {
+    color:#00ffad
+  }
+
+}

@@ -1,0 +1,329 @@
+/*****************************************************
+*					LOGIN
+*****************************************************/
+
+.fusap_bg {
+	background-color: #09173E;
+}
+
+#fusap_login {
+	margin-top: 60px;
+}
+
+#fusap_login p, #fusap_login h3 {
+	color: white;
+}
+
+#fusap_login .forget-password,
+#fusap_login .forget-password:hover {
+	color: white
+}
+
+
+/*****************************************************
+*					DATATABLES
+*****************************************************/
+
+/* Esconde el filtro por defecto del DataTable
+   porque no se ve bien dentro de un modal */
+div.dataTables_filter {
+	display:none;
+}
+
+/* Redefinicion de paginado bootstrap */
+.pagination>li>a, .pagination>li>span {
+	padding: 5px 10px !important;
+}
+
+/* Redefinicion dataTable para dispositivos mobiles */
+table.dataTable.dtr-inline.collapsed > tbody > tr > td:first-child:before,
+table.dataTable.dtr-inline.collapsed > tbody > tr > th:first-child:before {
+	top: auto !important;
+	background-color: black !important;
+}
+
+/* Redefinicion dataTable dispositivos moviles */
+table span.dtr-data div {
+	width: 200px;
+	display: list-item;
+}
+
+td, th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/*****************************************************
+*					WIZARD
+*****************************************************/
+
+.tabcontrol {
+	background-color: #ffffff;
+}
+
+.tabcontrol > .steps {
+    background-color: #ffffff;
+    border-color: #e7eaec;
+    border-image: none;
+    border-style: solid solid none;
+    border-width: 4px 0px 0;
+    color: inherit;
+    margin-bottom: 0;
+    min-height: 48px;
+}
+
+.tabcontrol > .steps > ul {
+	margin: 0;
+    top: 0;
+}
+
+.wizard-action {
+	height: 70px;
+	background-color: white;
+	margin-bottom: 25px;
+}
+
+.wizard-action .hr-line-dashed {
+	margin-top: 0px;
+}
+
+
+/*****************************************************
+*					ERRORES
+*****************************************************/
+
+span.error {
+	font-family: Arial;
+    font-size: 12px;
+	color: Red;
+}
+
+
+/*****************************************************
+*					CHECKBOX
+*****************************************************/
+div.form-checkboxbutton {
+    line-height: 56px;
+    margin-bottom: 0px !important;
+}
+div.form-checkboxbutton > label {
+	float: left;
+	margin-top: 7px;
+}
+div.form-checkboxbutton > table {
+	display: inline-block;
+	margin-left: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+div.checkboxbutton {
+    margin-top: 16px;
+	position: relative;
+	display: inline-block;
+	margin-right: 5px;
+	width: 22px;
+}
+div.checkboxbutton input {
+	position: absolute;
+	display: none;
+}
+div.checkboxbutton label {
+	cursor: pointer;
+	position: inherit;
+	width: 22px;
+	height: 22px;
+	top: 0;
+	left: 0;
+	margin-right: 18px;
+	margin-bottom: 0px;
+	background: white;
+	border: 1px solid #d5d5d5;
+}
+div.checkboxbutton + label {
+    margin-right: 15px;
+    vertical-align: bottom;
+}
+div.checkboxbutton label:after {
+	content: '';
+	position: absolute;
+	width: 12px;
+	height: 7px;
+	background: transparent;
+	top: 5px;
+	left: 4px;
+	border: 3px solid #333;
+	border-top: none;
+	border-right: none;
+	opacity: 0;
+
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+div.checkboxbutton input[type=checkbox]:checked + label:after {
+	opacity: 1;
+}
+
+
+/*****************************************************
+*					RADIOBUTTON
+*****************************************************/
+
+div.form-radiobutton > label {
+	float: left;
+	margin-top: 7px;
+}
+div.form-radiobutton > table {
+	display: inline-block;
+	margin-left: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+div.radiobutton {
+	position: relative;
+	display: inline-block;
+  	margin-right: 5px;
+	width: 22px;
+}
+div.radiobutton input {
+	position: inherit;
+}
+div.radiobutton label {
+	cursor: pointer;
+	position: absolute;
+	width: 22px;
+	height: 22px;
+	top: 0;
+	left: 0;
+	margin-right: 18px;
+	background: white;
+	border: 1px solid #d5d5d5;
+	margin-top: 4px;
+}
+div.radiobutton label:after {
+	content: '';
+	position: absolute;
+	width: 12px;
+	height: 7px;
+	background: transparent;
+	top: 5px;
+	left: 4px;
+	border: 3px solid #333;
+	border-top: none;
+	border-right: none;
+	opacity: 0;
+
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+div.radiobutton input[type=radio]:checked + label:after {
+	opacity: 1;
+}
+
+
+/*****************************************************
+*				 PROGRESS BAR
+*****************************************************/
+
+div.progress {
+	margin-bottom: 2px !important;
+}
+
+/*****************************************************
+*					DASHBOARD
+*****************************************************/
+
+div.semaphore {
+    display: flex;
+    align-items: center;
+}
+
+
+/*****************************************************
+*					PROFILE
+*****************************************************/
+
+div.profile-circle {
+	text-align: center;
+}
+div.profile-circle img {
+	width: 55px;
+}
+
+div.profile {
+	width: 200px;
+	height: 200px;
+	display: inline-block;
+	padding: 10px;
+	background: red;
+	position: relative;
+	background: radial-gradient(
+		transparent 6px,
+		transparent 4px,
+		#C2C2CA 1px,
+		#C2C2CA
+	);
+	background-size: 20px 20px;
+	background-position: -10px -10px;
+	margin-bottom: 10px;
+}
+div.profile img {
+	width: 180px;
+	border-radius: 10px;
+}
+div.profile:after {
+	content: '';
+	position: absolute;
+	left: 5px; top: 5px; right: 5px; bottom: 5px;
+	box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.5);
+	z-index: -1;
+}
+
+div.image-to-upload
+{
+	width: 535px;
+	height: 400px;
+	position: relative;
+	background-image: url('../img/crop_init.png');
+	border: 1px solid #f3f3f4;
+ 	padding: 0px;
+}
+div.image-to-upload-jcrop
+{
+	background-image: url('../img/crop_start.png') !important;
+}
+div.image-to-upload img
+{
+	max-width: 538px;
+	max-height: 400px;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+div.image-to-upload > div
+{
+	position: absolute !important;
+	margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+div.image-to-upload input[type="radio"]
+{
+	display: none !important;
+}
+label {
+	display: inline-block;
+	max-width: 100%;
+	margin-bottom: 5px;
+	font-weight: 700
+}

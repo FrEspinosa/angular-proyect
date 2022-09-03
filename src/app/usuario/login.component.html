@@ -1,0 +1,56 @@
+<div class="  d-flex justify-content-center">
+
+<div class="card">
+  <div class="card-header card-header-blue">
+    <h4 class="card-title">Sistema Interno de FUSAP.</h4>
+    <p class="card-category">Inicie sesion!</p>
+  </div>
+  <!-- fields go here -->
+  <div class="card-body">
+    <div class="col-sm-12">
+      <form method="post" class="m-t">
+        <mat-form-field appearance="outline">
+          <mat-label>Usuario</mat-label>
+          <input
+            [(ngModel)]="usuario.username"
+            name="username"
+            id="username"
+            matInput
+            required
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>password</mat-label>
+          <input
+            class="fusap_login forget-password"
+            [(ngModel)]="usuario.password"
+            name="password"
+            id="password"
+            type="password"
+            matInput
+            required
+          />
+        </mat-form-field>
+
+        <button
+          (click)="login()"
+          type="submit"
+          name="submit"
+          class="btn btn-primary block full-width m-b"
+        >
+          Ingresar
+        </button>
+
+        <a class="forget-password" href="#"><small></small></a>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+
+

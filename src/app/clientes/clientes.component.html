@@ -1,0 +1,94 @@
+  <div class="col-lg-12 animated fadeInDown">
+    <div class="card">
+      <div class="card-header card-header-blue">
+        <h1 class="card-title">Lista de colaboradores</h1>
+        <p class="card-category">Datos personales</p>
+      </div>
+      <div class="card-body">
+
+
+        <div class="content messages-container">
+          <div *ngIf="clientes?.length == 0" id="information_message" class="alert alert-info rounded">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <div class="Message-icon">
+              <fa-icon [icon]="['fas', 'info-circle']"></fa-icon>
+            </div>
+            <div class="Message-body">
+              <strong>No se encontraron clientes! </strong>
+              <span></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <mat-form-field appearance="standard">
+              <mat-label>Filtrar</mat-label>
+              <input matInput (keyup)="applyFilter($event)" placeholder="Ingrese un valor" #input>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          </div>
+        <div class="col-md-3">
+          <button   style="margin-right:0px;" color="primary" mat-raised-button class="mat-focus-indicator  mat-button-base" type="button" [routerLink]="['/clientes/form']">Crear colaborador</button>
+        </div>
+        </div>
+        <div class="mat-elevation-z8 text-center">
+        <mat-table [dataSource]="dataSource" matSort>
+          <!-- Position Column -->
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let cliente">
+              <td>   
+              <!-- TODO: Solucionar el problema con estas fotos--> 
+              <img *ngIf="cliente?.fotoPerfil else elseBlock2" src="{{variableImagenesGuardadas}}{{cliente.fotoPerfil}}" alt="{{cliente.fotoPerfil}}" class=" img-list" style="width:64px;    border-radius: 6.25rem;"> 
+              <!-- <img *ngIf="cliente?.fotoPerfil else elseBlock2" src="{{variableGlobal}}/fusap/uploads/img/{{cliente.fotoPerfil}}" alt="{{cliente.fotoPerfil}}" class=" img-list" style="width:64px;    border-radius: 6.25rem;"> -->
+               <!-- <img *ngIf="cliente?.fotoPerfil else elseBlock2" src="http://localhost:8080/fusap/uploads/img/{{cliente.fotoPerfil}}" alt="{{cliente.fotoPerfil}}" class=" img-list" style="width:64px;    border-radius: 6.25rem;"> -->
+                <ng-template #elseBlock2>
+                <img src="{{variableGlobal}}/images/employe03.jpg" class="rounded img-list" style="width:64px; cursor-pointer">
+                <!-- <img src="{{variableGlobal}}/images/employe03_p.jpg" class="rounded img-list" style="width:64px; cursor-pointer"> --> 
+                <!-- ESTE NO FUNCIONA Y NO TENGO IDEA POR QUE NO <img src="{{variableGlobal}}/fusap/images/employe03_p.jpg" class="rounded img-list" style="width:64px; cursor-pointer"> -->
+                </ng-template>
+              </td>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="nombre">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
+            <mat-cell *matCellDef="let cliente"> {{cliente.nombre}} </mat-cell>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="apellido">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </mat-header-cell>
+            <mat-cell *matCellDef="let cliente"> {{cliente.apellido}} </mat-cell>
+          </ng-container>
+          <!-- Weight Column -->
+          <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+            <mat-cell *matCellDef="let cliente"> {{cliente.email}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+            <mat-cell *matCellDef="let cliente">
+              <div>
+                <td *ngIf="loginService.hasRole('ROLE_ADMIN')">
+                </td>
+                <td>
+                  <button *ngIf="loginService.hasRole('ROLE_ADMIN')" class="margin-buttons" color="primary" mat-raised-button class="button-list" name="buttonEditar" [routerLink]="['/clientes/form', cliente.id]" style=" margin: 10px">Editar</button>
+                  <button *ngIf="loginService.hasRole('ROLE_ADMIN')" color="warn" mat-raised-button  class="button-list" name="buttonEliminar" (click)='delete(cliente)'style=" margin: 10px">Eliminar</button>
+                  <button  *ngIf="loginService.hasRole('ROLE_USER')" color="accent"  mat-raised-button class="button-list" name="buttonEditar" [routerLink]="['/clientes/ficha', cliente.id]"  style=" margin: 10px">Ver Ficha</button>
+                </td>
+              </div>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+  </div>
+

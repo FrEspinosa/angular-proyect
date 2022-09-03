@@ -1,0 +1,228 @@
+<div class="col-lg-12 animated fadeInDown">
+  <ul *ngIf="errores.length > 0" class="alert alert-danger">
+    <li *ngFor="let err of errores">
+      <b>{{ err }}</b>
+    </li>
+  </ul>
+</div>
+<div fxLayout="row wrap" fxLayoutAlign="stretch flex-start">
+  <div class="card" fxFlex="100" fxFlex.lt-md="100" fxFlex.lt-sm="100">
+    <div class="card-header card-header-blue">
+      <h4 class="card-title">Datos de la notebook</h4>
+      <p class="card-category">Datos tecnicos</p>
+      <h3 class="code-title">{{ notebook.fusapId }}</h3>
+    </div>
+
+    <fieldset [disabled]="this.role ? 'disabled' : null">
+      <div class="card-body">
+        <div class="col-md-12 col-sm-12">
+          <form #notebookForm="ngForm">
+            <div class="row">
+              <div class="col-md-4 col-sm-6">
+                <mat-form-field appearance="outline" style="font-weight: bold">
+                  <mat-label style="font-size: 20px">Codigo Fusap</mat-label>
+                  <input *ngIf="empleado?.id; else elseBlock2" [(ngModel)]="notebook.fusapId" name="fusapId" #fusapId="ngModel" disabled matInput required />
+                  <ng-template #elseBlock2>
+                    <input [(ngModel)]="notebook.fusapId" name="fusapId" #fusapId="ngModel" matInput required />
+                    <mat-error *ngIf="fusapId.errors?.['required']"> El campo FUSAP ID es requerido </mat-error>
+                  </ng-template>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Marca</mat-label>
+                  <mat-select [(ngModel)]="notebook.marca" name="marca" #marca="ngModel" matInput required >
+                    <mat-option value="Acer"> Acer </mat-option>
+                    <mat-option value="Alienware"> Alienware </mat-option>
+                    <mat-option value="Apple"> Apple </mat-option>
+                    <mat-option value="Asus"> Asus  </mat-option>
+                    <mat-option value="Dell"> Dell  </mat-option>
+                    <mat-option value="Gateway"> Gateway </mat-option>
+                    <mat-option value="HP"> HP </mat-option>
+                    <mat-option value="Lenovo"> Lenovo </mat-option>
+                    <mat-option value="LG"> LG </mat-option>
+                    <mat-option value="MSI"> MSI </mat-option>
+                    <mat-option value="Samsung"> Samsung </mat-option>
+                    <mat-option value="Sony"> Sony </mat-option>
+                    <mat-option value="Toshiba"> Toshiba </mat-option>
+                    <mat-option value="Otro"> Otro </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="marca.errors?.['required']"> El campo MARCA es requerido </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Modelo</mat-label>
+                  <input [(ngModel)]="notebook.modelo" name="modelo" #modelo="ngModel" matInput required />
+                  <mat-error *ngIf="modelo.errors?.['required']"> El campo MODELO es requerido </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-sm-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Procesador</mat-label>
+                  <input [(ngModel)]="notebook.procesador" name="procesador" #procesador="ngModel" matInput required />
+                  <mat-error *ngIf="procesador.errors?.['required']"> El campo PROCESADOR es requerido </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4 col-sm-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>RAM Tipo</mat-label>
+                  <mat-select [(ngModel)]="notebook.ramTipo" name="ramTipo" #ramTipo="ngModel" matInput required>
+                    <mat-option value="DDR3"> DDR3 </mat-option>
+                    <mat-option value="DDR4"> DDR4 </mat-option>
+                    <mat-option value="DDR5"> DDR5 </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="ramTipo.errors?.['required']"> El campo RAM TIPO es requerido </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>RAM actual</mat-label>
+                  <mat-select [(ngModel)]="notebook.ramActual" name="ramActual" #ramActual="ngModel" matInput required >
+                    <mat-option value="8 GB"> 8 GB </mat-option>
+                    <mat-option value="12 GB"> 12 GB </mat-option>
+                    <mat-option value="16 GB"> 16 GB  </mat-option>
+                    <mat-option value="20 GB"> 20 GB  </mat-option>
+                    <mat-option value="24 GB"> 24 GB </mat-option>
+                    <mat-option value="32 GB"> 32 GB </mat-option>
+                    <mat-option value="64 GB"> 64 GB </mat-option>
+                    <mat-option value="128 GB"> 128 GB </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="ramActual.errors?.['required']"> El campo RAM ACTUAL es requerido </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-sm-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>RAM max</mat-label>
+                  <mat-select [(ngModel)]="notebook.ramMax" name="ramMax" #ramMax="ngModel" matInput required >
+                    <mat-option value="8 GB"> 8 GB </mat-option>
+                    <mat-option value="12 GB"> 12 GB </mat-option>
+                    <mat-option value="16 GB"> 16 GB  </mat-option>
+                    <mat-option value="24 GB"> 24 GB </mat-option>
+                    <mat-option value="32 GB"> 32 GB </mat-option>
+                    <mat-option value="64 GB"> 64 GB </mat-option>
+                    <mat-option value="128 GB"> 128 GB </mat-option>
+                    <mat-option value="256 GB"> 256 GB </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="ramMax.errors?.['required']"> El campo RAM MAX es requerido </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4 col-sm-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Disco Tipo</mat-label>
+                  <mat-select [(ngModel)]="notebook.discoTipo" name="discoTipo" #discoTipo="ngModel" matInput required>
+                    <mat-option value="HDD"> HDD </mat-option>
+                    <mat-option value="SSD"> SSD </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="discoTipo.errors?.['required']"> El campo DISCO TIPO es requerido </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Disco capacidad</mat-label>
+                  <mat-select [(ngModel)]="notebook.discoCapacidad" name="discoCapacidad" #discoCapacidad="ngModel" matInput required >
+                    <mat-option value="64 GB"> 64 GB </mat-option>
+                    <mat-option value="128 GB"> 128 GB </mat-option>
+                    <mat-option value="256 GB"> 256 GB </mat-option>
+                    <mat-option value="480 GB"> 480 GB  </mat-option>
+                    <mat-option value="960 GB"> 960 GB  </mat-option>
+                    <mat-option value="2048 GB"> 2048 GB </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="discoCapacidad.errors?.['required']"> El campo DISCO CAPACIDAD es requerido </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </form>
+          <div class="row">
+            <div class="hr-line-dashed"></div>
+            <div class="col-md-12 col-sm-12 text-center">
+              <div class="form-group" style="margin-bottom: 0px">
+                <button class="btn btn-primary" role="button" (click)="create()" *ngIf="!notebook.id; else elseBlock"
+                  [disabled]="!notebookForm.form.valid">
+                  Crear
+                </button>
+                <ng-template #elseBlock>
+                  <button mat-raised-button color="accent" (click)="updateNotebook()"
+                    [disabled]="!notebookForm.form.valid">
+                    <mat-icon>edit_note</mat-icon>
+                    Guardar cambios
+                  </button>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <!---  
+      ***************************
+      \ DATOS DEL EMPLEADO /
+
+      Solo   cargo si la notebook esta asignada. Lo seteo en disabled para que no se pueda modificar
+          un empleado desde la edicion de notebook 
+      ***************************-->
+  <div class="card" fxFlex="70" fxFlex.lt-md="100" fxFlex.lt-sm="100">
+    <div *ngIf="empleado.id != null">
+      <div class="card-header card-header-blue">
+        <h4 class="card-title">Datos del colaborador</h4>
+        <p class="card-category">Colaborador que tiene asignada la notebook.</p>
+      </div>
+      <fieldset disabled="disabled">
+        <div class="card-body">
+          <div class="col-sm-12">
+            <form #clienteForm="ngForm" disabled>
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  <div class="form-group">
+                    <mat-form-field appearance="legacy">
+                      <mat-label>Nombre</mat-label>
+                      <input [(ngModel)]="empleado.nombre" name="nombre" #nombre="ngModel" matInput required />
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                  <div class="form-group">
+                    <mat-form-field appearance="legacy">
+                      <mat-label>Apellido</mat-label>
+                      <input [(ngModel)]="empleado.apellido" name="apellido" #apellido="ngModel" matInput required />
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-6">
+                <div class="col-md-6 col-sm-6">
+                  <div class="form-group">
+                    <mat-form-field appearance="legacy">
+                      <mat-label>Email</mat-label>
+                      <input [(ngModel)]="empleado.email" name="email" #email="ngModel" matInput required />
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                  <div class="form-group">
+                    <div>
+                      <mat-form-field appearance="legacy">
+                        <mat-label>Fecha ingreso</mat-label>
+                        <input [matDatepicker]="miDatepicker" [(ngModel)]="empleado.fechaIngreso" name="fechaIngreso"
+                          matInput required />
+                      </mat-form-field>
+                      <mat-datepicker-toggle [for]="miDatepicker"></mat-datepicker-toggle>
+                      <mat-datepicker #miDatepicker></mat-datepicker>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+</div>
